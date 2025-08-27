@@ -1,0 +1,77 @@
+/* ==========================================
+  App.css - New styles to match the V4IT theme
+  ==========================================
+*/
+
+/* 1. Define theme colors using CSS variables for easy management */
+:root {
+  --primary-color: #f0542d; /* Reddish-orange accent from the image */
+  --primary-color-darker: #d94721; /* Darker shade for hover effects */
+  --background-color: #f8f9fa;   /* Light grey page background */
+  --text-dark: #212529;           /* Dark grey for headings */
+  --text-light: #6c757d;          /* Lighter grey for body text */
+  --border-color: #dee2e6;         /* Subtle border for inputs and cards */
+  --success-color: #28a745;         /* A standard 'success' green */
+}
+
+/* 2. Apply global styles */
+body {
+  /* Use !important to ensure this overrides Tailwind's bg-gray-100 */
+  background-color: var(--background-color) !important; 
+  font-family: 'Inter', sans-serif; /* Ensures the font is consistent */
+}
+
+/* 3. Refine the main container's shadow and border */
+.bg-white.shadow-xl {
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 4. Style headings and paragraphs to match the new color scheme */
+h2 {
+  color: var(--text-dark);
+}
+
+p {
+  color: var(--text-light);
+}
+
+/* 5. Override Tailwind's default Indigo theme with our new primary color */
+
+/* Buttons: Target the indigo classes used in the components */
+.bg-indigo-600 {
+  background-color: var(--primary-color) !important;
+  transition: background-color 0.3s ease;
+}
+
+.bg-indigo-600:hover {
+  background-color: var(--primary-color-darker) !important;
+}
+
+/* Icons and Links */
+.text-indigo-500,
+.text-indigo-600 {
+  color: var(--primary-color) !important;
+}
+
+/* Input field focus ring */
+.focus\:ring-indigo-500:focus {
+  --tw-ring-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 2px var(--primary-color) !important;
+}
+
+/* General input and textarea styles */
+input,
+textarea {
+    border-color: var(--border-color) !important;
+}
+input:focus,
+textarea:focus {
+    outline: none; /* Removes default browser outline for a cleaner look */
+}
+
+/* 6. Style the confirmation checkmark */
+.text-green-500 {
+  color: var(--success-color) !important;
+}
