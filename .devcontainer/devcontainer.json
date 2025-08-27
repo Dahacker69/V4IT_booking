@@ -1,0 +1,30 @@
+{
+  "name": "React Vite Codespace",
+  // Use a pre-built image with Node.js, TypeScript, and common tools
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye",
+
+  "//": "Forward the port Vite uses so you can see your live app.",
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": {
+      "labeledExternal": true,
+      "label": "Application Preview",
+      "onAutoForward": "openPreview"
+    }
+  },
+
+  "//": "Run this command after the Codespace is created.",
+  "postCreateCommand": "npm install",
+
+  "//": "Install useful VS Code extensions automatically.",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "GitHub.copilot"
+      ]
+    }
+  }
+}
