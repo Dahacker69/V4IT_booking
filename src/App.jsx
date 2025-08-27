@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
-import Header from './Header.jsx'; // Import the new Header component
+
+// --- STYLES ---
+import 'leaflet/dist/leaflet.css';
+import 'leaflet-geosearch/dist/geosearch.css';
+import './geosearch-custom.css'; 
+
+// --- COMPONENTS ---
 import Auth from './Auth.jsx';
 import BookingForm from './BookingForm.jsx';
 import Confirmation from './Confirmation.jsx';
-import Services from './Services.jsx';
+import ServiceAreaMap from './ServiceAreaMap.jsx';
+import Header from './Header.jsx';
+import Footer from './Footer.jsx'; // Import the new Footer component
 
-// Main application component for the booking portal
 const App = () => {
-  // Use a switch-case pattern for managing different views in the app
-  const [view, setView] = useState('services'); // 'services', 'auth', 'booking', 'confirmation'
+  const [view, setView] = useState('map');
   const [selectedService, setSelectedService] = useState(null);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    description: '',
-    date: '',
-    time: '',
+    name: '', email: '', phone: '', description: '', date: '', time: '',
   });
 
-  // ... (keep all your existing handler functions: handleServiceSelect, handleAuthSuccess, etc.)
-  const handleServiceSelect = (service) => {
+  const handleServiceSelectionComplete = (service) => {
     setSelectedService(service);
     setView('auth');
   };
@@ -30,60 +30,34 @@ const App = () => {
   };
 
   const handleBookingSubmit = (data) => {
-    console.log('Booking submitted:', {
-      service: selectedService.name,
-      ...data,
-    });
     setFormData({ ...formData, ...data });
     setView('confirmation');
   };
 
   const handleNewBooking = () => {
-    setView('services');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      description: '',
-      date: '',
-      time: '',
-    });
+    setView('map');
     setSelectedService(null);
-  };
-
-
-  const renderView = () => {
-    switch (view) {
-      case 'services':
-        return <Services onServiceSelect={handleServiceSelect} />;
-      case 'auth':
-        return <Auth onAuthSuccess={handleAuthSuccess} onBack={() => setView('services')} />;
-      case 'booking':
-        return (
-          <BookingForm
-            selectedService={selectedService}
-            onBookingSubmit={handleBookingSubmit}
-            onBack={() => setView('auth')}
-          />
-        );
-      case 'confirmation':
-        return <Confirmation formData={formData} selectedService={selectedService} onNewBooking={handleNewBooking} />;
-      default:
-        return null;
-    }
+    setFormData({ name: '', email: '', phone: '', description: '', date: '', time: '' });
   };
 
   return (
-    // Changed the main div to a fragment <> to allow Header and the portal to coexist
-    <>
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
-      <div className="min-h-screen bg-gray-100 p-4 sm:p-8 flex items-center justify-center font-['Inter']">
-        <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl mt-[-10vh]"> 
-          {/* Added a negative margin-top to pull the card up slightly */}
-          {renderView()}
-        </div>
-      </div>
-    </>
+      <main className="flex-grow p-4 sm:p-8 flex items-center justify-center min-h-0">
+        {view === 'map' ? (
+          <div className="w-full h-full bg-white rounded-xl shadow-2xl overflow-hidden">
+            <ServiceAreaMap onBookingProceed={handleServiceSelectionComplete} />
+          </div>
+        ) : (
+          <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-lg mx-auto">
+            {view === 'auth' && <Auth onAuthSuccess={handleAuthSuccess} onBack={() => setView('map')} />}
+            {view === 'booking' && <BookingForm selectedService={selectedService} onBookingSubmit={handleBookingSubmit} onBack={() => setView('auth')} />}
+            {view === 'confirmation' && <Confirmation formData={formData} selectedService={selectedService} onNewBooking={handleNewBooking} />}
+          </div>
+        )}
+      </main>
+      <Footer /> {/* Add the Footer component here */}
+    </div>
   );
 };
 

@@ -1,0 +1,40 @@
+/* Custom styles for leaflet-geosearch bar */
+.leaflet-control-geosearch.bar {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 400px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.leaflet-control-geosearch.bar form {
+    border: none;
+    height: 48px;
+}
+
+.leaflet-control-geosearch.bar form input {
+    height: 100%;
+    padding-left: 40px; /* Space for the icon */
+    font-size: 1rem;
+    border-radius: 8px;
+}
+
+.leaflet-control-geosearch.bar .glass {
+    top: 12px;
+    left: 12px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-size: 20px 20px;
+}
+
+.leaflet-control-geosearch.bar .results {
+    margin-top: 8px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
